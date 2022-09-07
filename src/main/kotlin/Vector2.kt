@@ -2,6 +2,9 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 class Vector2(val x:Float, val y:Float) {
+    class Space2(val basisPoint:Vector2, val axisX:Vector2, val axisY:Vector2){
+
+    }
     companion object Vector2Functions{
         val unit = Vector2(1f,1f)
 
@@ -13,6 +16,13 @@ class Vector2(val x:Float, val y:Float) {
             val an = a.normalized
             val bn = b.normalized
             return dot(an,bn)
+        }
+
+        fun space(toSpace: Space2, fromSpace: Space2, vectorFromSpace: Vector2): Vector2{
+            val localisedSpace = fromSpace.basisPoint - toSpace.basisPoint
+            val localisedPointPosition = localisedSpace + vectorFromSpace
+            // Проецируем вектор на пространство.
+            return Vector2(dot(toSpace.axisX,localisedPointPosition),dot(toSpace.axisY,localisedPointPosition))
         }
     }
 
